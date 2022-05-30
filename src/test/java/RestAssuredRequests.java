@@ -2,11 +2,13 @@ import com.google.common.collect.Ordering;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.regex.Matcher;
 
 import static io.restassured.RestAssured.given;
 
@@ -67,6 +69,7 @@ public class RestAssuredRequests {
                 .when()
                 .get("/posts/" + postNumber)
                 .then().log().all()
+                .body(Matchers.anything())
                 .extract().response();
 
         Assert.assertEquals(NOT_FOUND_STATUS_CODE, response.statusCode());
