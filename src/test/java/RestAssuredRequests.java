@@ -1,9 +1,12 @@
+import com.google.common.collect.Ordering;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -27,9 +30,11 @@ public class RestAssuredRequests {
                 .get("/posts")
                 .then().log().all()
                 .extract().response();
+        List<String> jsonResponse = response.jsonPath().getList("id");
 
         Assert.assertEquals(OK_STATUS_CODE, response.statusCode());
-        Assert.assertEquals("qui est esse", response.jsonPath().getString("title[1]"));
+        Assert.assertTrue(Ordering.natural().isOrdered(jsonResponse));
+
     }
 
     //Case2
