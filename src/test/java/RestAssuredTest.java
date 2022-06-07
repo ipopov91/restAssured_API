@@ -20,6 +20,9 @@ public class RestAssuredTest {
     private final int NOT_FOUND_STATUS_CODE = 404;
     private final int CREATED_STATUS_CODE = 201;
 
+    private String postPath = "/posts/";
+    private String userPath = "/users/";
+
     String requestBody = "{\n" +
             "  \"title\": \"AlexExample\",\n" +
             "  \"body\": \"example_body\",\n" +
@@ -37,12 +40,13 @@ public class RestAssuredTest {
     /**
      * Case 1
      */
+
     @Test
     public void getRequestToPosts() {
         Response response = given()
                 .spec(spec)
                 .when()
-                .get("/posts")
+                .get(postPath)
                 .then().log().all()
                 .extract().response();
         List<String> jsonResponse = response.jsonPath().get("id");
@@ -55,6 +59,7 @@ public class RestAssuredTest {
     /**
      * Case 2
      */
+
     @Test
     public void getRequestToPostsWithQueryParam() {
         int postNumber = 99;
@@ -66,7 +71,7 @@ public class RestAssuredTest {
                 .spec(spec)
                 .param(paramName, paramValue)
                 .when()
-                .get("/posts/" + postNumber)
+                .get(postPath + postNumber)
                 .then().log().all()
                 .extract().response();
 
@@ -78,6 +83,7 @@ public class RestAssuredTest {
     /**
      * Case 3
      */
+
     @Test
     public void getRequestToPostsWithIncorrectData() {
         int postNumber = 150;
@@ -85,7 +91,7 @@ public class RestAssuredTest {
         Response response = given()
                 .spec(spec)
                 .when()
-                .get("/posts/" + postNumber)
+                .get(postPath + postNumber)
                 .then().log().all()
                 .body(Matchers.anything())
                 .extract().response();
@@ -96,15 +102,15 @@ public class RestAssuredTest {
     /**
      * Case 4
      */
+
     @Test
     public void postRequest() {
-
         Response response = given()
                 .spec(spec)
                 .and()
                 .body(requestBody)
                 .when()
-                .post("/posts")
+                .post(postPath)
                 .then().log().all()
                 .extract().response();
 
@@ -118,12 +124,13 @@ public class RestAssuredTest {
     /**
      * Case 5
      */
+
     @Test
     public void getRequestUsers() {
         Response response = given()
                 .spec(spec)
                 .when()
-                .get("/users")
+                .get(userPath)
                 .then().log().all()
                 .extract().response();
 
@@ -147,6 +154,7 @@ public class RestAssuredTest {
     /**
      * Case 6
      */
+
     @Test
     public void getRequestToUsersWithQueryParam() {
         String paramName = "id";
@@ -156,7 +164,7 @@ public class RestAssuredTest {
                 .spec(spec)
                 .param(paramName, paramValue)
                 .when()
-                .get("/users")
+                .get(userPath)
                 .then().log().all()
                 .extract().response();
 
