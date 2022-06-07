@@ -20,6 +20,12 @@ public class RestAssuredTest {
     private final int NOT_FOUND_STATUS_CODE = 404;
     private final int CREATED_STATUS_CODE = 201;
 
+    String requestBody = "{\n" +
+            "  \"title\": \"AlexExample\",\n" +
+            "  \"body\": \"example_body\",\n" +
+            "  \"userId\": \"1\",\n" +
+            "  \"id\": \"101\" \n}";
+
     @BeforeAll
     public static void initSpec(){
         spec = new RequestSpecBuilder()
@@ -54,6 +60,7 @@ public class RestAssuredTest {
         int postNumber = 99;
         String paramName = "userId";
         String paramValue = "10";
+
 
         Response response = given()
                 .spec(spec)
@@ -91,11 +98,6 @@ public class RestAssuredTest {
      */
     @Test
     public void postRequest() {
-        String requestBody = "{\n" +
-                "  \"title\": \"AlexExample\",\n" +
-                "  \"body\": \"example_body\",\n" +
-                "  \"userId\": \"1\",\n" +
-                "  \"id\": \"101\" \n}";
 
         Response response = given()
                 .spec(spec)
