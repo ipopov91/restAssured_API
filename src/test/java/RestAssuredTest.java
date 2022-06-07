@@ -1,7 +1,9 @@
 import com.google.common.collect.Ordering;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,13 +15,18 @@ import static io.restassured.RestAssured.given;
 
 public class RestAssuredTest {
 
+    private static RequestSpecification spec;
+
     private final int OK_STATUS_CODE = 200;
     private final int NOT_FOUND_STATUS_CODE = 404;
     private final int CREATED_STATUS_CODE = 201;
 
     @BeforeAll
-    public static void setup() {
-        RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
+    public static void initSpec(){
+        spec = new RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
+                .setBaseUri("https://jsonplaceholder.typicode.com")
+                .build();
     }
 
     /**
@@ -28,7 +35,7 @@ public class RestAssuredTest {
     @Test
     public void getRequestToPosts() {
         Response response = given()
-                .contentType(ContentType.JSON)
+                .spec(spec)
                 .when()
                 .get("/posts")
                 .then().log().all()
@@ -50,7 +57,7 @@ public class RestAssuredTest {
         String paramValue = "10";
 
         Response response = given()
-                .contentType(ContentType.JSON)
+                .spec(spec)
                 .param(paramName, paramValue)
                 .when()
                 .get("/posts/" + postNumber)
@@ -70,7 +77,7 @@ public class RestAssuredTest {
         int postNumber = 150;
 
         Response response = given()
-                .contentType(ContentType.JSON)
+                .spec(spec)
                 .when()
                 .get("/posts/" + postNumber)
                 .then().log().all()
@@ -92,7 +99,7 @@ public class RestAssuredTest {
                 "  \"id\": \"101\" \n}";
 
         Response response = given()
-                .header("Content-type", "application/json")
+                .spec(spec)
                 .and()
                 .body(requestBody)
                 .when()
@@ -113,7 +120,7 @@ public class RestAssuredTest {
     @Test
     public void getRequestUsers() {
         Response response = given()
-                .contentType(ContentType.JSON)
+                .spec(spec)
                 .when()
                 .get("/users")
                 .then().log().all()
@@ -145,7 +152,7 @@ public class RestAssuredTest {
         String paramValue = "5";
 
         Response response = given()
-                .contentType(ContentType.JSON)
+                .spec(spec)
                 .param(paramName, paramValue)
                 .when()
                 .get("/users")
