@@ -16,10 +16,6 @@ public class RestAssuredTest {
 
     private static RequestSpecification spec;
 
-    private final int OK_STATUS_CODE = 200;
-    private final int NOT_FOUND_STATUS_CODE = 404;
-    private final int CREATED_STATUS_CODE = 201;
-
     private String postPath = "/posts/";
     private String userPath = "/users/";
 
@@ -47,11 +43,10 @@ public class RestAssuredTest {
                 .spec(spec)
                 .when()
                 .get(postPath)
-                .then().log().all()
+                .then().statusCode(200).log().all()
                 .extract().response();
         List<String> jsonResponse = response.jsonPath().get("id");
 
-        Assertions.assertEquals(OK_STATUS_CODE, response.statusCode());
         Assertions.assertTrue(Ordering.natural().isOrdered(jsonResponse));
 
     }
@@ -72,10 +67,9 @@ public class RestAssuredTest {
                 .param(paramName, paramValue)
                 .when()
                 .get(postPath + postNumber)
-                .then().log().all()
+                .then().statusCode(200).log().all()
                 .extract().response();
 
-        Assertions.assertEquals(OK_STATUS_CODE, response.statusCode());
         Assertions.assertFalse(response.jsonPath().getString("title").isEmpty());
         Assertions.assertFalse(response.jsonPath().getString("body").isEmpty());
     }
@@ -92,11 +86,9 @@ public class RestAssuredTest {
                 .spec(spec)
                 .when()
                 .get(postPath + postNumber)
-                .then().log().all()
+                .then().statusCode(404).log().all()
                 .body(Matchers.anything())
                 .extract().response();
-
-        Assertions.assertEquals(NOT_FOUND_STATUS_CODE, response.statusCode());
     }
 
     /**
@@ -111,10 +103,9 @@ public class RestAssuredTest {
                 .body(requestBody)
                 .when()
                 .post(postPath)
-                .then().log().all()
+                .then().statusCode(201).log().all()
                 .extract().response();
 
-        Assertions.assertEquals(CREATED_STATUS_CODE, response.statusCode());
         Assertions.assertEquals("AlexExample", response.jsonPath().getString("title"));
         Assertions.assertEquals("example_body", response.jsonPath().getString("body"));
         Assertions.assertEquals("1", response.jsonPath().getString("userId"));
@@ -131,10 +122,9 @@ public class RestAssuredTest {
                 .spec(spec)
                 .when()
                 .get(userPath)
-                .then().log().all()
+                .then().statusCode(200).log().all()
                 .extract().response();
 
-        Assertions.assertEquals(OK_STATUS_CODE, response.statusCode());
         Assertions.assertEquals("Chelsey Dietrich", response.jsonPath().getString("name[4]"));
         Assertions.assertEquals("Kamren", response.jsonPath().getString("username[4]"));
         Assertions.assertEquals("Lucio_Hettinger@annie.ca", response.jsonPath().getString("email[4]"));
@@ -165,10 +155,9 @@ public class RestAssuredTest {
                 .param(paramName, paramValue)
                 .when()
                 .get(userPath)
-                .then().log().all()
+                .then().statusCode(200).log().all()
                 .extract().response();
 
-        Assertions.assertEquals(OK_STATUS_CODE, response.statusCode());
         Assertions.assertEquals("Chelsey Dietrich", response.jsonPath().getString("name[0]"));
         Assertions.assertEquals("Kamren", response.jsonPath().getString("username[0]"));
         Assertions.assertEquals("Lucio_Hettinger@annie.ca", response.jsonPath().getString("email[0]"));
