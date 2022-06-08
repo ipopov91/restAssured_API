@@ -38,7 +38,7 @@ public class RestAssuredTest {
      */
 
     @Test
-    public void getRequestToPosts() {
+    public void getResponseFromPosts() {
         Response response = given()
                 .spec(spec)
                 .when()
@@ -56,7 +56,7 @@ public class RestAssuredTest {
      */
 
     @Test
-    public void getRequestToPostsWithQueryParam() {
+    public void getResponseFromPostsWithQueryParam() {
         int postNumber = 99;
         String paramName = "userId";
         String paramValue = "10";
@@ -79,7 +79,7 @@ public class RestAssuredTest {
      */
 
     @Test
-    public void getRequestToPostsWithIncorrectData() {
+    public void getResponseFromPostsWithIncorrectData() {
         int postNumber = 150;
 
         Response response = given()
@@ -96,7 +96,7 @@ public class RestAssuredTest {
      */
 
     @Test
-    public void postRequest() {
+    public void addPost() {
         Response response = given()
                 .spec(spec)
                 .and()
@@ -117,7 +117,7 @@ public class RestAssuredTest {
      */
 
     @Test
-    public void getRequestUsers() {
+    public void getResponseUsers() {
         Response response = given()
                 .spec(spec)
                 .when()
@@ -146,7 +146,7 @@ public class RestAssuredTest {
      */
 
     @Test
-    public void getRequestToUsersWithQueryParam() {
+    public void getResponseFromUsersWithQueryParam() {
         String paramName = "id";
         String paramValue = "5";
 
