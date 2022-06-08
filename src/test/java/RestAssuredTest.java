@@ -151,21 +151,20 @@ public class RestAssuredTest {
                 .when()
                 .get(userPath)
                 .then().statusCode(200).log().all()
+                .body(containsString("Chelsey Dietrich"))
+                .body(containsString("Kamren"))
+                .body(containsString("Lucio_Hettinger@annie.ca"))
+                .body(containsString("Skiles Walks"))
+                .body(containsString("Suite 351"))
+                .body(containsString("Roscoeview"))
+                .body(containsString("33263"))
+                .body(containsString("-31.8129"))
+                .body(containsString("62.5342"))
+                .body(containsString("(254)954-1289"))
+                .body(containsString("demarco.info"))
+                .body(containsString("Keebler LLC"))
+                .body(containsString("User-centric fault-tolerant solution"))
+                .body(containsString("revolutionize end-to-end systems"))
                 .extract().response();
-
-        Assertions.assertEquals("Chelsey Dietrich", response.jsonPath().getString("name[0]"));
-        Assertions.assertEquals("Kamren", response.jsonPath().getString("username[0]"));
-        Assertions.assertEquals("Lucio_Hettinger@annie.ca", response.jsonPath().getString("email[0]"));
-        Assertions.assertEquals("Skiles Walks", response.jsonPath().getString("address.street[0]"));
-        Assertions.assertEquals("Suite 351", response.jsonPath().getString("address.suite[0]"));
-        Assertions.assertEquals("Roscoeview", response.jsonPath().getString("address.city[0]"));
-        Assertions.assertEquals("33263", response.jsonPath().getString("address.zipcode[0]"));
-        Assertions.assertEquals("-31.8129", response.jsonPath().getString("address.geo.lat[0]"));
-        Assertions.assertEquals("62.5342", response.jsonPath().getString("address.geo.lng[0]"));
-        Assertions.assertEquals("(254)954-1289", response.jsonPath().getString("phone[0]"));
-        Assertions.assertEquals("demarco.info", response.jsonPath().getString("website[0]"));
-        Assertions.assertEquals("Keebler LLC", response.jsonPath().getString("company.name[0]"));
-        Assertions.assertEquals("User-centric fault-tolerant solution", response.jsonPath().getString("company.catchPhrase[0]"));
-        Assertions.assertEquals("revolutionize end-to-end systems", response.jsonPath().getString("company.bs[0]"));
     }
 }
