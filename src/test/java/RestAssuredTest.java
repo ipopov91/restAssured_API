@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
 
 public class RestAssuredTest {
 
@@ -36,7 +37,6 @@ public class RestAssuredTest {
     /**
      * Case 1
      */
-
     @Test
     public void getResponseFromPosts() {
         Response response = given()
@@ -54,13 +54,11 @@ public class RestAssuredTest {
     /**
      * Case 2
      */
-
     @Test
     public void getResponseFromPostsWithQueryParam() {
         int postNumber = 99;
         String paramName = "userId";
         String paramValue = "10";
-
 
         Response response = given()
                 .spec(spec)
@@ -77,7 +75,6 @@ public class RestAssuredTest {
     /**
      * Case 3
      */
-
     @Test
     public void getResponseFromPostsWithIncorrectData() {
         int postNumber = 150;
@@ -94,7 +91,6 @@ public class RestAssuredTest {
     /**
      * Case 4
      */
-
     @Test
     public void addPost() {
         Response response = given()
@@ -104,6 +100,7 @@ public class RestAssuredTest {
                 .when()
                 .post(postPath)
                 .then().statusCode(201).log().all()
+                .body(containsString("id"))
                 .extract().response();
 
         Assertions.assertEquals("AlexExample", response.jsonPath().getString("title"));
@@ -115,7 +112,6 @@ public class RestAssuredTest {
     /**
      * Case 5
      */
-
     @Test
     public void getResponseUsers() {
         Response response = given()
@@ -144,7 +140,6 @@ public class RestAssuredTest {
     /**
      * Case 6
      */
-
     @Test
     public void getResponseFromUsersWithQueryParam() {
         String paramName = "id";
